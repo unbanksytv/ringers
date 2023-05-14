@@ -19,7 +19,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1>Generate NFTs</h1>
+      <h1>Ikigai Labs Gen Art Series</h1>
       <p>Check the console for logs</p>
     </div>
   );
