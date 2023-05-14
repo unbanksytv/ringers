@@ -31,9 +31,28 @@ const generateNFTs = () => {
         canvas.parent('canvas-container'); // Replace 'canvas-container' with the ID of your HTML container
       };
 
-      p.draw = function () {
-        // Add your artwork drawing code here
-        // Generate Mark Rothko inspired artwork
+      p.draw = () => {
+        p.background(255);
+      
+        const centerX = canvasWidth / 2;
+        const centerY = canvasHeight / 2;
+        const numCircles = 10;
+        const circleSize = 50;
+        const circleSpacing = 30;
+        
+        for (let i = 0; i < numCircles; i++) {
+          const x = centerX + p.random(-circleSpacing, circleSpacing);
+          const y = centerY + p.random(-circleSpacing, circleSpacing);
+          const fillColor = p.color(p.random(255), p.random(255), p.random(255));
+          const strokeColor = p.color(p.random(255), p.random(255), p.random(255));
+          
+          p.strokeWeight(2);
+          p.stroke(strokeColor);
+          p.fill(fillColor);
+          p.circle(x, y, circleSize);
+        }
+      };
+      
 
         // Save the canvas as an image
         const fileName = `nft-${i}.png`;
