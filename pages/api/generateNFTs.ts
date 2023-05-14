@@ -1,5 +1,3 @@
-// pages/api/generateNFTs.ts
-
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createCanvas, loadImage } from 'canvas';
 import fs from 'fs';
@@ -27,8 +25,28 @@ export default async function generateNFTs(
     const canvas = createCanvas(canvasWidth, canvasHeight);
     const context = canvas.getContext('2d');
 
-    // Add your NFT generation logic here
-    // Generate the artwork using canvas API and Mark Rothko colors
+    // Generate the artwork using canvas API and "ringers" style
+    const backgroundColor = getRandomColor();
+    const color1 = getRandomColor();
+    const color2 = getRandomColor();
+    
+    // Draw the background
+    context.fillStyle = backgroundColor;
+    context.fillRect(0, 0, canvasWidth, canvasHeight);
+
+    // Draw the rectangles (rings)
+    const numRectangles = getRandomInt(3, 6);
+    const rectangleWidth = canvasWidth / numRectangles;
+
+    for (let j = 0; j < numRectangles; j++) {
+      const x = j * rectangleWidth;
+      const rectangleHeight = canvasHeight / getRandomInt(2, 5);
+      const y = (canvasHeight - rectangleHeight) / 2;
+      const rectangleColor = j % 2 === 0 ? color1 : color2;
+
+      context.fillStyle = rectangleColor;
+      context.fillRect(x, y, rectangleWidth, rectangleHeight);
+    }
 
     // Save the canvas as an image
     const fileName = `nft-${i}.png`;
@@ -51,4 +69,15 @@ export default async function generateNFTs(
   }
 
   res.status(200).json({ message: 'NFTs generated successfully' });
+}
+
+// Helper function to generate a random color
+function getRandomColor() {
+  const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Helper function to generate a random integer within a range
+function getRandomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
